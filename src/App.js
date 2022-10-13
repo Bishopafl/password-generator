@@ -52,6 +52,31 @@ function App() {
     });
   };
 
+  function generatePassword() {
+    const numbersArray = [0,1,2,3,4,5,6,7,8,9];
+    const symbolsArray = ["!","@","#","$","%","^","&","*"];
+
+    const characterCodes = Array.from(Array(26)).map((_e, i) => i + 97);
+    const lowerCaseLetters = characterCodes.map(letter => String.fromCharCode(letter));
+    const upperCaseLetters = lowerCaseLetters.map(letter => letter.toUpperCase());
+
+    const { length, uppercase, lowercase, numbers, symbols } = password; // store information
+
+    const generateTheWord = (length, uppercase, lowercase, numbers, symbols) => {
+      const availableCharacters = [
+        ...(uppercase ? upperCaseLetters : []),
+        ...(lowercase ? lowerCaseLetters : []),
+        ...(numbers ? numbersArray : []),
+        ...(symbols ? symbolsArray : []),
+      ];
+      const shuffleArray = (array) => array.sort(()=> Math.random() - 0.5);
+      const characters = shuffleArray(availableCharacters).slice(0, length);
+      setHandleText(characters.join(''));
+      return characters;
+    }
+    generateTheWord(length, uppercase, lowercase, numbers, symbols);
+  }
+
   return (
     <div className='wrapper'>
       <div className='container wrapper-box'>
@@ -60,7 +85,7 @@ function App() {
           <input type="text" value={handleText} onChange={(e) => setHandleText(e.target.value)} />
           <button className='copy-button' onClick={() => {
             if (handleText.length > 0) {
-              navigator.clipboard.writeTest(handleText);
+              navigator.clipboard.writeText(handleText);
               setCopied(true);
               setInterval(() => {
                 setCopied(false);
@@ -77,7 +102,7 @@ function App() {
             <label>Password Length &nbsp;</label>
           </div>
           <div>
-            <input type="number" value={handleText} onChange={(e) => setPasswordLength(e.target.value)} />
+            <input type="number" value={password.length} onChange={(e) => setPasswordLength(e.target.value)} />
           </div>
         </div>
         <br />
@@ -130,7 +155,7 @@ function App() {
         </div>
         <br />
         <div>
-          <button className='generate-button'>Generate Password</button>
+          <button className='generate-button' onClick={generatePassword}>Generate Password</button>
         </div>
       </div>
     </div>
