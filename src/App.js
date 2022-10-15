@@ -39,7 +39,7 @@ function App() {
   };
 
   const handleChangesSymbols = () => {
-    setHandleText({
+    setPassword({
       ...password,
       symbols: !password.symbols,
     });
@@ -78,7 +78,7 @@ function App() {
   }
 
   return (
-    <div className='wrapper'>
+    <div className='wrapper passgen'>
       <div className='container wrapper-box'>
         <h2 className='generator-title'>Password Generator</h2>
         <div className='password-box'>

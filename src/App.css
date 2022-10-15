@@ -1,8 +1,17 @@
+body {
+  background-image: url('https://nypost.com/wp-content/uploads/sites/2/2022/09/password-expiration-5.jpg');
+  background-repeat: no-repeat;
+  background-size: cover cover;
+}
+
 .wrapper-box {
   text-align: center;
-  background-color: teal;
+  color: white;
+  width: 75%;
+  background-color: blue;
+  border: 1px solid white;
   width: 50%;
-  box-shadow: 5px 10px;
+  box-shadow: 5px 10px 5px;
   padding-top: 2%;
   padding-bottom: 5%;
   margin-top: 10%;
@@ -10,6 +19,7 @@
 }
 
 .generator-title {
+  color: inherit;
   font-size: 42px;
   font-weight: 800;
 }
@@ -20,6 +30,8 @@
 
 .word-crieteria__box {
   display: inline-flex;
+  color: silver;
+  font-weight: 800;
 }
 
 @keyframes App-logo-spin {
@@ -30,3 +42,4 @@
     transform: rotate(360deg);
   }
 }
+
