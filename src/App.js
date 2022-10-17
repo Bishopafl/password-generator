@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import logo from './logo.svg';
+import { Button, Card, Col, Container, InputGroup, Row } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import './App.css';
 import Checkbox from './components/Checkbox';
 
@@ -78,87 +78,94 @@ function App() {
   }
 
   return (
-    <div className='wrapper passgen'>
-      <div className='container wrapper-box'>
-        <h2 className='generator-title'>Password Generator</h2>
-        <div className='password-box'>
-          <input type="text" value={handleText} onChange={(e) => setHandleText(e.target.value)} />
-          <button className='copy-button' onClick={() => {
-            if (handleText.length > 0) {
-              navigator.clipboard.writeText(handleText);
-              setCopied(true);
-              setInterval(() => {
-                setCopied(false);
-              }, 2000);
-            }
-          }} 
-          >
-            {copied ? 'Copied!' : 'Copy text' }
-          </button>
-        </div>
-        <br />
-        <div className='word-crieteria__box'>
+    <Container className='password-card-container' fluid>
+      <Card className='password-card'>
+        <Card.Header>
           <div>
-            <label>Password Length &nbsp;</label>
+            <Button className="float-end" onClick={() => window.location.reload(false)} variant="outline-info">Clear Form</Button>{' '}
           </div>
-          <div>
-            <input type="number" value={password.length} onChange={(e) => setPasswordLength(e.target.value)} />
-          </div>
-        </div>
-        <br />
-        <div className='word-crieteria__box'>
-          <div>
-            <label>Include uppercase letters&nbsp;</label>
-          </div>
-          <div>
-            <Checkbox 
-              value={password.uppercase} 
-              onChange={handleChangesUppercase} 
+        </Card.Header>
+        <Card.Body>
+          <Card.Title>Password Generator</Card.Title>
+          <InputGroup className="mb-3">
+          <Form.Control
+            value={handleText} onChange={(e) => setHandleText(e.target.value)}
+            aria-label="copy-text-input-box"
+          />
+          <InputGroup.Text className="bg-primary">
+            <Button
+              className='p-0 m-0'
+              onClick={() => {
+                if (handleText.length > 0) {
+                  navigator.clipboard.writeText(handleText);
+                  setCopied(true);
+                  setInterval(() => {
+                    setCopied(false);
+                  }, 2000);
+                }
+              }} 
+            >{copied ? 'Copied!' : 'Copy text' }</Button>
+          </InputGroup.Text>
+        </InputGroup>
+        <Form>
+          <Form.Label htmlFor="basic-url">Password Length</Form.Label>
+          <InputGroup className="mb-3">
+            <Form.Control
+              value={password.length} 
+              onChange={(e) => setPasswordLength(e.target.value)}
+              aria-label="Password Length"
+              aria-describedby="basic-input-length"
+              type='number'
             />
-          </div>
-        </div>
-        <br />
-        <div className='word-crieteria__box'>
-          <div>
-            <label>Include lowercase letters&nbsp;</label>
-          </div>
-          <div>
-            <Checkbox 
+          </InputGroup>
+
+          <Form.Group className="mb-3" controlId="uppercase">
+            <Form.Check 
+              type="checkbox"
+              label="Include Uppercase Letters"
+              value={password.uppercase} 
+              onChange={handleChangesUppercase}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="lowercase">
+            <Form.Check 
+              type="checkbox"
+              label="Include Lowercase Letters"
               value={password.lowercase}
               onChange={handleChangesLowercase}
             />
-          </div>
-        </div>
-        <br />
-        <div className='word-crieteria__box'>
-          <div>
-            <label>Include numbers&nbsp;</label>
-          </div>
-          <div>
-            <Checkbox 
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="numbers">
+            <Form.Check 
+              type="checkbox" 
+              label="Include Numbers"
               value={password.numbers}
               onChange={handleChangesNumbers}
             />
-          </div>
-        </div>
-        <br />
-        <div className='word-crieteria__box'>
-          <div>
-            <label>Include symbols&nbsp;</label>
-          </div>
-          <div>
-            <Checkbox 
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="symbol">
+            <Form.Check 
+              type="checkbox" 
+              label="Include Symbols"
               value={password.symbols}
               onChange={handleChangesSymbols}
             />
+          </Form.Group>
+          <div className="text-center">
+            <Button 
+              variant="primary"
+              onClick={generatePassword}
+            >
+              Generate Password
+            </Button>
           </div>
-        </div>
-        <br />
-        <div>
-          <button className='generate-button' onClick={generatePassword}>Generate Password</button>
-        </div>
-      </div>
-    </div>
+        </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 
